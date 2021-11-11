@@ -1,0 +1,51 @@
+﻿@model HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Movies</h1>
+
+<form>
+    <div class="row align-items-center">
+        <div class="col-auto">
+            <select asp-for="SelectedGenreId" name="genre" asp-items="Model.Genres" class="form-control">
+                <option>All</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary ">Get Movies</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped mt-3">
+    <thead>
+
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Rating</th>
+            <th>Genres</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (Movie movie in Model.Movies)
+        {
+
+            <tr>
+                <td>@movie.Id</td>
+                <td>@movie.Title</td>
+                <td>@movie.Year</td>
+                <td>@movie.Rating</td>
+                <td>@string.Join(",", movie.Genres.Select(x => x.Name))</td>
+            </tr>
+        }
+
+
+
+    </tbody>
+
+</table>
