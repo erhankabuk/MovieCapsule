@@ -6,22 +6,24 @@
 
 <h1>Movies</h1>
 
-<form>
-    <div class="row align-items-center">
+<div class="row  align-items-center mb-3">
+    <form class="col-auto row">
         <div class="col-auto">
             <select asp-for="SelectedGenreId" name="genre" asp-items="Model.Genres" class="form-control">
                 <option>All</option>
             </select>
         </div>
-        <div class="col-auto">
+        <div class="col-auto ">
             <button class="btn btn-primary ">Get Movies</button>
         </div>
-    </div>
-</form>
+    </form>
+    <form class="col-auto ml-auto">
+        <input type="text" name="q" asp-for="SearchCriteria" placeholder="Search" class="form-control"/>
+    </form>
+</div>
 
-<table class="table table-striped mt-3">
+<table id="tblMovies" class="table table-striped table-bordered mt-3">
     <thead>
-
         <tr>
             <th>Id</th>
             <th>Title</th>
@@ -34,7 +36,6 @@
 
         @foreach (Movie movie in Model.Movies)
         {
-
             <tr>
                 <td>@movie.Id</td>
                 <td>@movie.Title</td>
@@ -43,9 +44,16 @@
                 <td>@string.Join(",", movie.Genres.Select(x => x.Name))</td>
             </tr>
         }
-
-
-
     </tbody>
 
 </table>
+@section Scripts{ 
+<script>
+    $('#tblMovies').DataTable({
+        searching: false,
+        lengthChange: false
+    });
+
+</script>
+
+}

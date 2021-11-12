@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "datatables.net@1.11.3",
+      "destination": "wwwroot/lib/datatables.net/"
+    }
+  ,
+{
+  "library": "datatables.net-bs4@1.11.3",
+  "destination": "wwwroot/lib/datatables.net-bs4/"
+}
+]
+}
