@@ -5,11 +5,45 @@
     {
       "library": "datatables.net@1.11.3",
       "destination": "wwwroot/lib/datatables.net/"
+    },
+    {
+      "library": "datatables.net-bs4@1.11.3",
+      "destination": "wwwroot/lib/datatables.net-bs4/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "simple-datatables@3.1.2",
+      "destination": "wwwroot/lib/simple-datatables/",
+
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "simple-datatables@3.1.2",
+      "destination": "wwwroot/lib/simple-datatables/",
+      "files": [
+        "dist/style.min.css",
+        "dist/style.css",
+        "dist/umd/simple-datatables.js",
+        "dist/umd/simple-datatables.min.js"
+      ]
     }
   ,
 {
-  "library": "datatables.net-bs4@1.11.3",
-  "destination": "wwwroot/lib/datatables.net-bs4/"
+  "provider": "cdnjs",
+  "library": "font-awesome@5.15.4",
+  "destination": "wwwroot/lib/font-awesome/"
+}
+,
+{
+  "provider": "cdnjs",
+  "library": "bootstrap@5.1.3",
+  "destination": "wwwroot/lib/bootstrap5/"
+}
+,
+{
+  "provider": "cdnjs",
+  "library": "Chart.js@3.6.0",
+  "destination": "wwwroot/lib/Chart.js/"
 }
 ]
 }
