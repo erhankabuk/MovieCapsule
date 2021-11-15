@@ -45,11 +45,19 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Menu</div>
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fas fa-external-link-alt"></i></div>
+                            View the Website
+                        </a>
+                        <a class="nav-link" asp-controller="Genres" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                            Genres
+                        </a>
                         <a class="nav-link" asp-controller="Movies" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-film"></i></div>
                             Movies
                         </a>
-                       
+
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">

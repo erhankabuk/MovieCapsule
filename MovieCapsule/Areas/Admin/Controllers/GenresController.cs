@@ -10,22 +10,22 @@ using MovieCapsule.Models;
 namespace MovieCapsule.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class MoviesController : Controller
+    public class GenresController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public MoviesController(ApplicationDbContext context)
+        public GenresController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/Movies
+        // GET: Admin/Genres
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Movies.ToListAsync());
+            return View(await _context.Genres.ToListAsync());
         }
 
-        // GET: Admin/Movies/Details/5
+        // GET: Admin/Genres/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,57 +33,39 @@ namespace MovieCapsule.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies
+            var genre = await _context.Genres
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+            if (genre == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            return View(genre);
         }
 
-        // GET: Admin/Movies/Create
-        public async Task<ActionResult> Create()
+        // GET: Admin/Genres/Create
+        public IActionResult Create()
         {
-            ViewData["Genres"] =  await _context.Genres.ToListAsync();
-
             return View();
         }
 
-        // POST: Admin/Movies/Create
+        // POST: Admin/Genres/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Year,Rating")] Movie movie, int[] selectedGenres)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Genre genre)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(movie);
+                _context.Add(genre);
                 await _context.SaveChangesAsync();
-                await AssignGenresAsync(movie.Id, selectedGenres);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SelectedGenres"] = selectedGenres ;
-            ViewData["Genres"] = await _context.Genres.ToListAsync();
-            return View(movie);
+            return View(genre);
         }
 
-        private  async Task AssignGenresAsync(int movieId, int[] selectedGenres)
-        {
-            Movie movie = await _context.Movies.FindAsync(movieId);
-            await _context.Entry(movie).Collection(m=>m.Genres).LoadAsync();
-            movie.Genres.Clear();
-            foreach(int genreId in selectedGenres)
-            {
-                movie.Genres.Add(await _context.Genres.FindAsync(genreId));
-            }
-            await _context.SaveChangesAsync();
-
-        }
-
-        // GET: Admin/Movies/Edit/5
+        // GET: Admin/Genres/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -91,25 +73,22 @@ namespace MovieCapsule.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies.FindAsync(id);
-            if (movie == null)
+            var genre = await _context.Genres.FindAsync(id);
+            if (genre == null)
             {
                 return NotFound();
             }
-            await _context.Entry(movie).Collection(m => m.Genres).LoadAsync();
-            ViewData["Genres"] = await _context.Genres.ToListAsync();
-            ViewData["SelectedGenres"] = movie.Genres.Select(g => g.Id).ToArray();
-            return View(movie);
+            return View(genre);
         }
 
-        // POST: Admin/Movies/Edit/5
+        // POST: Admin/Genres/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Year,Rating")] Movie movie ,int[] selectedGenres)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Genre genre)
         {
-            if (id != movie.Id)
+            if (id != genre.Id)
             {
                 return NotFound();
             }
@@ -118,13 +97,12 @@ namespace MovieCapsule.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(movie);
-                    await AssignGenresAsync(movie.Id, selectedGenres);
+                    _context.Update(genre);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MovieExists(movie.Id))
+                    if (!GenreExists(genre.Id))
                     {
                         return NotFound();
                     }
@@ -135,12 +113,10 @@ namespace MovieCapsule.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Genres"] = await _context.Genres.ToListAsync();
-            ViewData["SelectedGenres"] = selectedGenres;
-            return View(movie);
+            return View(genre);
         }
 
-        // GET: Admin/Movies/Delete/5
+        // GET: Admin/Genres/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,30 +124,30 @@ namespace MovieCapsule.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies
+            var genre = await _context.Genres
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+            if (genre == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            return View(genre);
         }
 
-        // POST: Admin/Movies/Delete/5
+        // POST: Admin/Genres/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var movie = await _context.Movies.FindAsync(id);
-            _context.Movies.Remove(movie);
+            var genre = await _context.Genres.FindAsync(id);
+            _context.Genres.Remove(genre);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MovieExists(int id)
+        private bool GenreExists(int id)
         {
-            return _context.Movies.Any(e => e.Id == id);
+            return _context.Genres.Any(e => e.Id == id);
         }
     }
 }

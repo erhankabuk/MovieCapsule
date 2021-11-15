@@ -78,7 +78,7 @@ namespace MovieCapsule.Models
                 .Entity<Genre>()
                 .HasMany(x => x.Movies)
                 .WithMany(x => x.Genres)
-                .UsingEntity<Dictionary<string, object>>(
+                .UsingEntity<Dictionary<string, object>>( 
                     "MovieGenre",
                     x => x.HasOne<Movie>().WithMany().HasForeignKey("MovieId"),
                     x => x.HasOne<Genre>().WithMany().HasForeignKey("GenreId"),

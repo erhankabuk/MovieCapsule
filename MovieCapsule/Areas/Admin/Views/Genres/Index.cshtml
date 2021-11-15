@@ -1,8 +1,10 @@
-﻿@model IEnumerable<MovieCapsule.Models.Movie>
+﻿@model IEnumerable<MovieCapsule.Models.Genre>
 
 @{
     ViewData["Title"] = "Index";
 }
+
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -10,13 +12,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th></th>
         </tr>
@@ -25,13 +21,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @item.Rating.ToString("0.0")
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
